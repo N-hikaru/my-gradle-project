@@ -1,0 +1,28 @@
+plugins {
+    id 'base'
+}
+
+// /home/h-nakagomi/my_python_rpm 実行パス
+
+task createTar(type: Tar) {
+    archiveBaseName.set('my_python_app')
+    archiveVersion.set('1.0')
+    archiveExtension.set('tar.gz')
+    destinationDirectory.set(file("build/rpmbuild/SOURCES"))  // tar.gzの出力先
+    from('../my_python_app') {
+        include 'my_python_app.py'
+    }
+
+    into('my_python_app-1.0')  // 追加：tar 内に my_python_app-1.0/ を含める
+}
+
+println "---------------------------------------"
+println "${buildDir}" // /home/h-nakagomi/my_python_rpm/build
+
+task buildRpm(type: Exec) {
+    dependsOn createTar
+    // commandLine 'rpmbuild', '-ba', '--define', '_topdir ' + file("$buildDir/rpmbuild").absolutePath, '../rpmbuild/SPECS/my_python_app.spec'
+    commandLine 'rpmbuild', '-ba', '--define', '_topdir ' + file("$buildDir/rpmbuild").absolutePath, 'build/rpmbuild/SPECS/my_python_app.spec'
+}
+
+build.dependsOn buildRpm

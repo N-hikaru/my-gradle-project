@@ -1,0 +1,13 @@
+day*/
+.bash_history
+.bash_logout
+.bash_profile
+.bashrc
+.cache/
+.vscode-server/
+.vscode/
+.local/
+.gradle/
+.lesshst
+.ssh/
+.gitconfig
