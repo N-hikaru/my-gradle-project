@@ -6,7 +6,7 @@ plugins {
 
 task createTar(type: Tar) {
     archiveBaseName.set('my_python_app')
-    archiveVersion.set('1.0')
+    archiveVersion.set('1.0') // git tag を参考にバージョン番号を変える
     archiveExtension.set('tar.gz')
     destinationDirectory.set(file("build/rpmbuild/SOURCES"))  // tar.gzの出力先
     from('../my_python_app') {

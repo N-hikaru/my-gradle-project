@@ -31,10 +31,20 @@ execReBuild() {
     popd > /dev/null
 }
 
+execDescribe() {
+    tagv=$(git describe --tags)
+    echo "${tagv}"
+    # ブランチが伸びている場合
+        # v1.0.0-1-gd68396c
+    # ブランチが伸びていない場合
+        # v1.0.0
+}
+
 printHelp() {
     echo "Options:"
     echo "  --build, -b  : 'gradle build'"
     echo "  --rebuild, -r: 'rpmbuild --rebuild my_python_app-*.src.rpm'"
+    echo "  --tag-check, -tc  : 'git describe --tags'"
 }
 
 
@@ -54,6 +64,12 @@ while (( "$#" > 0 )); do
         --rebuild|-r)
             {
                 execReBuild
+                shift
+            }
+            ;;
+        --tag-check|-tc)
+            {
+                execDescribe
                 shift
             }
             ;;
